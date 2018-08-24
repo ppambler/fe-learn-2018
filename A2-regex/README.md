@@ -12,6 +12,12 @@
 
 **➹：**[Regular Expressions](http://www.visibone.com/regular-expressions/)
 
+## ★工具使用
+
+**➹：**[Regexper](https://regexper.com/)
+
+**➹：**[Online regex tester and debugger: PHP, PCRE, Python, Golang and JavaScript](https://regex101.com/)
+
 ## ★书籍推荐
 
 **➹：**[正则表达式必知必会 (豆瓣)](https://book.douban.com/subject/2269648/)
