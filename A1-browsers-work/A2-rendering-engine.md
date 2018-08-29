@@ -86,7 +86,7 @@ typora-copy-images-to: p
 
 偶遇的链接，**✎：**
 
-**➹：**[我在阿里的这两年 | Jark's Blog](http://wuchong.me/blog/2017/07/16/two-years-in-alibaba/)
+**➹：**[我在阿里的这两年 - Jark's Blog](http://wuchong.me/blog/2017/07/16/two-years-in-alibaba/)
 
 话不多说，解释这两张图，**✎：**
 
@@ -112,7 +112,7 @@ Gecko 将[视觉格式化元素](http://genie88.github.io/2015/10/29/css-visual-
 
 **➹：**[HTTP协议之chunk介绍 - CSDN博客](https://blog.csdn.net/u014558668/article/details/70141956)
 
-**➹：**[http协议中content-length 以及chunked编码分析 | Sina App Engine Blog](http://blog.sae.sina.com.cn/archives/3795)
+**➹：**[http协议中content-length 以及chunked编码分析 -Sina App Engine Blog](http://blog.sae.sina.com.cn/archives/3795)
 
 **➹：**[★HTTP协议之chunk编码(分块传输编码) - CSDN博客](https://blog.csdn.net/xifeijian/article/details/42921827)
 
