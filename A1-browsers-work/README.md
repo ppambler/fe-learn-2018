@@ -6,6 +6,12 @@
 
 ps：最好是看英文的，因为英文有更新，内容更全！
 
+**➹：**[页面渲染深入解析 - yope的个人页面 - 开源中国](https://my.oschina.net/nyp/blog/384472)
+
+**➹：**[理解关键渲染路径 - 众成翻译](https://zcfy.cc/article/understanding-the-critical-rendering-path-2452.html)
+
+
+
 ## ★序言
 
 ### ◇内容
