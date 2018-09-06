@@ -12,6 +12,8 @@
 
 **➹：**[Regular Expressions](http://www.visibone.com/regular-expressions/)
 
+**➹：**[正则基本入门](https://www.villainhr.com/page/2017/10/17/%E6%AD%A3%E5%88%99%E5%9F%BA%E6%9C%AC%E5%85%A5%E9%97%A8)
+
 ## ★工具使用
 
 **➹：**[Regexper](https://regexper.com/)
