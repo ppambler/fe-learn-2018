@@ -11,6 +11,8 @@
 - [响应式开发](./A4-responsive-layout/README.md)
   - [第1章-前期准备](./A4-responsive-layout/第1章-前期准备.md)
   - [第2章-如何组织项目目录结构](./A4-responsive-layout/第2章-如何组织项目目录结构.md)
+- [JavaScript](./JavaScript/README.md)
+  - [作用域](./JavaScript/scope.md)
 - [其它的](./A5-other/README.md)
   - [一个像素点的一生](./A5-other/一个像素点的一生.md)
 
