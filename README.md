@@ -15,4 +15,5 @@
   - [作用域](./JavaScript/scope.md)
 - [其它的](./A5-other/README.md)
   - [一个像素点的一生](./A5-other/一个像素点的一生.md)
+- [JS-深入浅出](./A7-JS-深入浅出/README.md)
 
