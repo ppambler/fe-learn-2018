@@ -7,7 +7,7 @@
   - [初认识](./A2-regex/01-初认识.md)
   - [regex入门](./A2-regex/02-regex入门.md)
 - [经验之谈](./A3-经验之谈/README.md)
-  - [如何成为一名很厉害的程序猿？](./A3-经验之谈/01-如何成为一名很厉害的程序猿.md)
+  - [如何成为一名很skr的程序猿？](./A3-buff/01-如何成为一名很skr的程序猿.md)
 - [响应式开发](./A4-responsive-layout/README.md)
   - [第1章-前期准备](./A4-responsive-layout/第1章-前期准备.md)
   - [第2章-如何组织项目目录结构](./A4-responsive-layout/第2章-如何组织项目目录结构.md)
