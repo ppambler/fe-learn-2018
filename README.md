@@ -12,7 +12,7 @@
   - [第1章-前期准备](./A4-responsive-layout/第1章-前期准备.md)
   - [第2章-如何组织项目目录结构](./A4-responsive-layout/第2章-如何组织项目目录结构.md)
 - [JavaScript](./JavaScript/README.md)
-  - [作用域](./JavaScript/scope.md)
+  - [作用域](./A6-JavaScript/01-scope.md)
 - [其它的](./A5-other/README.md)
   - [life of a pixel](./A5-other/01-life-of-a-pixel.md)
 - [JS-深入浅出](./A7-JS-深入浅出/README.md)
