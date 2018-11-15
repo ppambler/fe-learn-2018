@@ -26,5 +26,7 @@ When this happens, I think **"Right，this is why they pay a human with a brain 
 
 **➹：**[How to be a wizard programmer · julia's drawings](https://drawings.jvns.ca/wizard-programmer/)
 
+**➹：**：[🔎Julia Evans🔍 (@b0rk) - Twitter](https://twitter.com/b0rk)
+
 
 
