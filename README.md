@@ -1,21 +1,40 @@
 # [fe-learn-2018](https://github.com/ppambler/fe-learn-2018)
 
-- [浏览器的工作原理](./01-browsers-work/README.md)
-  - [简介](./01-browsers-work/01-introduction.md)
-  - [渲染引擎](./01-browsers-work/02-rendering-engine.md)
-- [正则表达式](./02-regex/README.md)
-  - [初认识](./02-regex/01-初认识.md)
-  - [regex入门](./02-regex/02-regex入门.md)
-- [经验之谈](./03-经验之谈/README.md)
-  - [如何成为一名很skr的程序猿？](./03-buff/01-如何成为一名很skr的程序猿.md)
-- [响应式开发](./04-responsive-layout/README.md)
-  - [第1章-前期准备](./04-responsive-layout/第1章-前期准备.md)
-  - [第2章-如何组织项目目录结构](./04-responsive-layout/第2章-如何组织项目目录结构.md)
-- [JavaScript](./JavaScript/README.md)
-  - [作用域](./06-JavaScript/01-scope.md)
-- [其它的](./05-other/README.md)
-  - [life of a pixel](./05-other/01-life-of-a-pixel.md)
-- [JS-深入浅出](./07-JS-深入浅出/README.md)
-  - [13-JS程序员常去哪些网站](./07-JS-深入浅出/13-JS程序员常去哪些网站.md)
-  - [01-学习环境搭建](./07-JS-深入浅出/01-学习环境搭建.md)
+## ★目录命名的参考
+
+**➹：**[fe13/fe: 前端学习指南](https://github.com/fe13/fe)
+
+**➹：**[分类：JavaScript - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/javascript/)
+
+**➹：**[本书介绍 · 饥人谷课件](http://book.jirengu.com/fe/)
+
+**➹：**[零基础的前端开发初学者应如何系统地学习？ - 知乎](https://www.zhihu.com/question/19834302)
+
+## ★目录
+
+- HTML
+  - [README](./HTML/README.md)
+- CSS
+  - [README](./CSS/README.md)
+- JavaScript
+  - [README](./JavaScript/README.md)
+  - [01-scope](./JavaScript/01-scope.md)
+- Browser
+  - [README](./Browser/README.md)
+  - [01-introduction](./Browser/01-introduction.md)
+  - [02-rendering-engine](./Browser/02-rendering-engine.md)
+- Chrome
+  - [README](./Chrome/README.md)
+  - [01-life of a pixel](./Chrome/01-life-of-a-pixel.md)
+- Regex
+  - [README](./Regex/README.md)
+  - [01-初认识](./Regex/01-初认识.md)
+  - [02-regex入门](./Regex/02-regex入门.md)
+
+- Soft-Skills
+  - [README](./Soft-Skills/README.md)
+  - [01-如何成为一名很skr的程序猿](./Soft-Skills/01-如何成为一名很skr的程序猿.md)
+- Online-Course
+  - [imooc](./Online-Course/imooc/README.md)
+  - [xiedaimala](./Online-Course/xiedaimala/README.md)
 
