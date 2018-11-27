@@ -284,11 +284,83 @@ baseline: 项目的第一行文字的基线对齐
 
 ##### align-content
 
+这是最后一个属性了，那么这个属性的作用是什么呢？
 
+它**定义了多根轴线的对齐方式，如果项目只有一根轴线，那么该属性将不起作用**
 
+> 难道一行item就是一根轴线，如果没有换行的话，那么在容器中那就只有一根轴线了啊！
 
+我们还是先来看看，它能取的值有哪些，**✎：**
 
+```css
+.container {
+    align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+}
+```
 
+总之，你可以这样理解这个属性，**✎：**
+
+- 当你 flex-wrap 设置为 nowrap 的时候，容器仅存在一根轴线，因为项目不会换行，就不会产生多条轴线。
+
+- 当你 flex-wrap 设置为 wrap 的时候，容器可能会出现多条轴线，这时候你就需要去设置多条轴线之间的对齐方式了。
+
+以下是建立在主轴为水平方向时测试，即 flex-direction: row, flex-wrap: wrap
+
+---
+
+默认值为 stretch，**✎：**
+
+![img](img/01/v2-c284017b4b8b731bc213cd1caab514e5_hd.jpg)
+
+从图可以看出有三条轴线(因为容器宽度有限)，当值为 stretch 时，三条轴线会平分容器的垂直方向上的空间。
+
+值得注意的是，虽然在每条轴线上项目的默认值也为 stretch，但是由于我每个项目我都设置了高度，所以它并没有撑开整个容器。如果项目不设置高度的话就会变成下面这样：
+
+![img](img/01/v2-2d5feceece695fb84fd650fc49164bd6_hd.jpg)
+
+在前面我们也有提到(align-items)，总之，在这里重点还是理解三条轴线会平分垂直轴上的空间
+
+---
+
+flex-start：轴线全部在交叉轴上的起点对齐
+
+![img](img/01/v2-61d92d7dc68e3d7d415a16830050fd11_hd.jpg)
+
+> 按照我的理解就是，你得把1234看作是个整体，即一根轴线，或许可以说是轴线上升了！
+
+---
+
+flex-end：轴线全部在交叉轴上的终点对齐
+
+![img](img/01/v2-0a0a7f10c50596aade787ae11b7b0a75_hd.jpg)
+
+> 这个可以说是轴线下沉了！
+
+---
+
+center：轴线全部在交叉轴上的中间对齐
+
+![img](img/01/v2-dcf53fce8dbcde7da9c677dd1a033860_hd.jpg)
+
+---
+
+space-between：轴线两端对齐，之间的间隔相等，即剩余空间等分成间隙。
+
+![img](img/01/v2-d80940f71e1e08d45d3d6df4c5401d0d_hd.jpg)
+
+> 之前说过，两端对齐是将文字左右两端同时进行对齐，并根据需要增加字间距！
+>
+> 在这里我似乎可以把1234这整个部分当作是一个字了
+
+---
+
+space-around：每个轴线两侧的间隔相等，所以轴线之间的间隔比轴线与边缘的间隔大一倍。
+
+![img](img/01/v2-7c4d5c01f3851a3cec7f8487c6edb21d_hd.jpg)
+
+---
+
+到这里关于容器上的所有属性都讲完了，接下来就来讲讲关于在 flex item 上的属性。
 
 #### 小结
 
@@ -297,3 +369,207 @@ baseline: 项目的第一行文字的基线对齐
    比如主轴为水平，而起点是从左到右，那么侧轴是从上到下吗？
 
 2. 我还是喜欢叫cross轴，或者是侧轴！而不是交叉轴！
+
+3. 一行元素一根轴！换行之后有侧轴！
+
+### ◇Flex item
+
+有哪些属性可运用在item上呢？
+
+同样，也有6种属性，分别是，**✎：**
+
+1. order
+2. flex-basis
+3. flex-grow
+4. flex-shrink
+5. flex
+6. align-self
+
+#### 解析6种属性
+
+##### order
+
+**定义项目在容器中的排列顺序，数值越小，排列越靠前，默认值为 0**
+
+```css
+.item {
+    order: <integer>;
+}
+```
+
+![img](img/01/v2-d606874ac9c496b3a0e46573c85e4376_hd.jpg)
+
+在 HTML 结构中，虽然 -2，-1 的 item 排在后面，但是由于分别设置了 order，使之能够排到最前面。
+
+> 本来都是0，奈何重设了order的值！
+
+##### flex-basis
+
+**定义了在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性，计算主轴是否有多余空间**
+
+```css
+.item {
+    flex-basis: <length> | auto;
+}
+```
+
+默认值：auto，即项目本来的大小, 这时候 item 的宽高取决于 width 或 height 的值。
+
+**当主轴为水平方向的时候，当设置了 flex-basis，项目的宽度设置值会失效，flex-basis 需要跟 flex-grow 和 flex-shrink 配合使用才能发挥效果。**
+
+- 当 flex-basis 值为 0 % 时，是把该项目视为零尺寸的，故即使声明该尺寸为 140px，也并没有什么用。
+- 当 flex-basis 值为 auto 时，则跟根据尺寸的设定值(假如为 100px)，则这 100px 不会纳入剩余空间。
+
+> 按之前的理解，这个一般都不用，总之你不写的话就是原始大小！
+
+##### flex-grow
+
+**定义项目的放大比例**
+
+```css
+.item {
+    flex-grow: <number>;
+}
+```
+
+默认值为 0，即如果存在剩余空间，也不放大
+
+![img](img/01/v2-5f7898c1f51fa7274a2c0b4a9dfd88c3_hd.jpg)
+
+当所有的项目都以 flex-basis 的值进行排列后，仍有剩余空间，那么这时候 flex-grow 就会发挥作用了。
+
+- 如果所有项目的 flex-grow 属性都为 1，则它们将等分剩余空间。(如果有的话)
+
+- 如果一个项目的 flex-grow 属性为 2，其他项目都为 1，则前者占据的剩余空间将比其他项多一倍。
+
+当然，如果当所有项目以 flex-basis 的值排列完后发现空间不够了，且 flex-wrap：nowrap 时，此时 flex-grow 则不起作用了，这时候就需要接下来的这个属性。
+
+##### flex-shrink
+
+**定义了项目的缩小比例**
+
+```css
+.item {
+    flex-shrink: <number>;
+}
+```
+
+  默认值: 1，即如果空间不足，该项目将缩小，负值对该属性无效。
+
+  ![img](img/01/v2-383e97971a7fc8c4f84e6a85406dbcaf_hd.jpg)
+
+这里可以看出，虽然每个项目都设置了宽度为 50px，但是由于自身容器宽度只有 200px，这时候每个项目会被同比例进行缩小，因为默认值为 1。
+
+同理可得：
+
+- 如果所有项目的 flex-shrink 属性都为 1，当空间不足时，都将等比例缩小。 
+
+- 如果一个项目的 flex-shrink 属性为 0，其他项目都为 1，则空间不足时，前者不缩小
+
+##### flex
+
+**flex-grow, flex-shrink 和 flex-basis的简写**
+
+```css
+.item{
+    flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+} 
+```
+
+flex 的默认值是以上三个属性值的组合。假设以上三个属性同样取默认值，则 flex 的默认值是 0 1 auto。
+
+有关快捷值：auto (1 1 auto) 和 none (0 0 auto)
+
+关于 flex 取值，还有许多特殊的情况，可以按以下来进行划分：
+
+- 当 flex 取值为一个非负数字，则该数字为 flex-grow 值，flex-shrink 取 1，flex-basis 取 0%，如下是等同的：
+
+```css
+.item {flex: 1;}
+.item {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
+```
+
+- 当 flex 取值为 0 时，对应的三个值分别为 0 1 0%
+
+```css
+.item {flex: 0;}
+.item {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
+```
+
+- 当 flex 取值为一个长度或百分比，则视为 flex-basis 值，flex-grow 取 1，flex-shrink 取 1，有如下等同情况（注意 0% 是一个百分比而不是一个非负数字）
+
+```css
+.item-1 {flex: 0%;}
+.item-1 {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
+
+.item-2 {flex: 24px;}
+.item-2 {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 24px;
+}
+```
+
+- 当 flex 取值为两个非负数字，则分别视为 flex-grow 和 flex-shrink 的值，flex-basis 取 0%，如下是等同的：
+
+```css
+.item {flex: 2 3;}
+.item {
+    flex-grow: 2;
+    flex-shrink: 3;
+    flex-basis: 0%;
+}
+```
+
+- 当 flex 取值为一个非负数字和一个长度或百分比，则分别视为 flex-grow 和 flex-basis 的值，flex-shrink 取 1，如下是等同的：
+
+```css
+.item {flex: 11 32px;}
+.item {
+    flex-grow: 11;
+    flex-shrink: 1;
+    flex-basis: 32px;
+}
+```
+
+建议优先使用这个属性，而不是单独写三个分离的属性。
+
+grow 和 shrink 是一对双胞胎，grow 表示伸张因子，shrink 表示是收缩因子。
+
+grow 在 flex 容器下的子元素的宽度和比容器和小的时候起作用。 grow 定义了子元素的尺寸增长因子，容器中除去子元素之和剩下的尺寸会按照各个子元素的 grow 值进行平分加大各个子元素上。
+
+##### align-self
+
+**允许单个项目有与其他项目不一样的对齐方式**
+
+单个项目覆盖 align-items 定义的属性
+
+默认值为 auto，表示继承父元素的 align-items 属性，如果没有父元素，则等同于 stretch。
+
+```css
+.item {
+     align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+```
+
+这个跟 align-items 属性时一样的，只不过 align-self 是对单个项目生效的，而 align-items 则是对容器下的所有项目生效的。
+
+![img](img/01/v2-2516cddfbbabaef96fd6dfab4eb71757_hd.jpg)
+
+容器 align-items 设置为 flex-start，而第三
+
+#### 小结
+
+- 需要花点时间捋捋这6个属性才行！
