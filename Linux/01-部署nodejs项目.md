@@ -195,6 +195,8 @@ cat /etc/redhat-release
 
 **➹：**[Linux学习笔记之Xshell配色方案定制 - 云+社区 - 腾讯云](https://cloud.tencent.com/developer/article/1173234)
 
+**➹：**[hellojukay/xshell-themes: 一系列xshell主题](https://github.com/hellojukay/xshell-themes)
+
 为了让路径有颜色所以需要往root目录下的 `.bashrc`中追加，**✎：**
 
 ```
