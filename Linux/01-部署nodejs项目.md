@@ -207,3 +207,38 @@ export PS1="\[\033[01;31m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\][\[\033[0
 
 **➹：**[Linux修改Shell命令提示符及颜色 - 简书](https://www.jianshu.com/p/426d0eeee671)
 
+似乎，还有更好的选择，**✎：**
+
+**➹：**[SSH客户端神器MobaXterm，是时候放弃putty、Xshell和CRT了 - 知乎](https://zhuanlan.zhihu.com/p/34455520)
+
+**➹：**[MobaXterm free Xserver and tabbed SSH client for Windows](https://mobaxterm.mobatek.net/)
+
+### ⑩nvm 与 每次重新登录？
+
+我用了nvm的方式装了node，然而每次登录进来node命令就失效了！
+
+要想激活，就得使用这个，**✎：**
+
+```bash
+nvm use v10.14.1
+```
+
+如何默认就是使用这个呢？
+
+很简单，直接，**✎：**
+
+```basg
+nvm alias default v10.14.1 // 使用 v10.14.1 作为预设使用的 node 版本
+```
+
+不过，在此之前似乎需要配置一下，`~/.bashrc`才行，**✎：**
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+```
+
+![1543941569261](img/01/1543941569261.png)
+
+**➹：**[linux下安装nvm - 简书](https://www.jianshu.com/p/6249d1d24914)
+
