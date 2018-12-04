@@ -244,3 +244,10 @@ export NVM_DIR="$HOME/.nvm"
 
 **➹：**[linux下安装nvm - 简书](https://www.jianshu.com/p/6249d1d24914)
 
+### ⑪补充将nodejs项目部署到阿里云ESC服务
+
+**➹：**[将nodejs项目部署到阿里云ESC服务器,linux系统配置80端口,实现公网IP访问 - 陈晓珍的博客 - CSDN博客](https://blog.csdn.net/putao2062/article/details/79688020)
+
+
+
+⑫⑬
