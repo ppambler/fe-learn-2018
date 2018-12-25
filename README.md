@@ -18,7 +18,7 @@
   - [README](./CSS/README.md)
 - JavaScript
   - [README](./JavaScript/README.md)
-  - [01-scope](./JavaScript/01-scope.md)
+  - [01-作用域](./JavaScript/01-作用域.md)
 - Browser
   - [README](./Browser/README.md)
   - [01-introduction](./Browser/01-introduction.md)
@@ -30,11 +30,12 @@
   - [README](./Regex/README.md)
   - [01-初认识](./Regex/01-初认识.md)
   - [02-regex入门](./Regex/02-regex入门.md)
-
 - Soft-Skills
   - [README](./Soft-Skills/README.md)
   - [01-如何成为一名很skr的程序猿](./Soft-Skills/01-如何成为一名很skr的程序猿.md)
 - Online-Course
   - [imooc](./Online-Course/imooc/README.md)
   - [xiedaimala](./Online-Course/xiedaimala/README.md)
-
+- [Tool](./Tool/README.md)
+  - [VS Code](./Tool/VSCode/README.md)
+    - 
