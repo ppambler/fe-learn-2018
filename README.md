@@ -13,32 +13,25 @@
 ## ★你应该经常去看去听
 
 - [代码时间](http://codetimecn.com/)
-- 
+- [知乎上有哪些在前端开发领域的高质量回答？ - 知乎](https://www.zhihu.com/question/20246142/answer/14470387)
 
 ## ★目录
 
-- HTML
-  - [README](./HTML/README.md)
-- CSS
-  - [README](./CSS/README.md)
-- JavaScript
-  - [README](./JavaScript/README.md)
+- [HTML](./HTML/README.md)
+- [CSS](./CSS/README.md)
+- [JavaScript](./JavaScript/README.md)
   - [01-作用域](./JavaScript/01-作用域.md)
-- Browser
-  - [README](./Browser/README.md)
+- [Browser](./Browser/README.md)
   - [01-introduction](./Browser/01-introduction.md)
   - [02-rendering-engine](./Browser/02-rendering-engine.md)
-- Chrome
-  - [README](./Chrome/README.md)
+- [Chrome](./Chrome/README.md)
   - [01-life of a pixel](./Chrome/01-life-of-a-pixel.md)
-- Regex
-  - [README](./Regex/README.md)
+- [Regex](./Regex/README.md)
   - [01-初认识](./Regex/01-初认识.md)
   - [02-regex入门](./Regex/02-regex入门.md)
-- Soft-Skills
-  - [README](./Soft-Skills/README.md)
+- [Soft-Skills](./Soft-Skills/README.md)
   - [01-如何成为一名很skr的程序猿](./Soft-Skills/01-如何成为一名很skr的程序猿.md)
-- Online-Course
+- [Online-Course](./Online-Course/README.md)
   - [imooc](./Online-Course/imooc/README.md)
   - [xiedaimala](./Online-Course/xiedaimala/README.md)
 - [Tool](./Tool/README.md)
