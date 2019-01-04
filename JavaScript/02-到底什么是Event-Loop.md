@@ -59,6 +59,10 @@ JavaScript实际上是怎样运作的？
 
 #### Call Stack
 
+> 一个线程 == 一个调用栈 == 一次只做一件事
+>
+> 关于一段代码？我理解就是一个js文件里的所有代码吧！
+
 JavaScript是一个单线程的编程语言。单线程的运行环境意味着它有且只有一个调用栈，它每次只能够做一件事，所以单线程的意思就是「程序每次只可以运行一段代码」。**✎：**
 
 ![1546409091794](img/02/1546409091794.png)
@@ -103,6 +107,8 @@ Call Stack基本上是一个记录当前程序所在位置的数据结构，如�
 
 #### blocking
 
+> 当事情进展缓慢时会发生什么?
+
 什么使程序运行变慢？这是一个很难的问题，当然我们借此就来谈谈阻塞！
 
 > 没有严格的定义说什么是阻塞，什么不阻塞。仅仅是指代码运行得很慢，比如说，console.log不慢，遍历从1到10亿很慢，网络请求很慢，下载图片也很慢。反正在栈里表现很慢的东西都叫阻塞……
@@ -137,6 +143,8 @@ Call Stack基本上是一个记录当前程序所在位置的数据结构，如�
 
 #### asynchronous callbacks
 
+> 这是一个函数，请调用它！
+
 那么，我们应该如何处理呢？我们最简单的方式是提供异步回调（回调就是一个函数）
 
 在浏览器中几乎没有阻塞的函数，node里也是这样，它们都是异步函数，这基本上意味着我们运行一些代码，给它一个回调函数并在之后运行，如果你看过JavaScript代码你就会看过这些异步回调，那么这实际上是什么样的呢？
@@ -162,6 +170,130 @@ console.log输出`Hi`，对吧！接着我们运行`setTimeout`，但我们把co
 所以，这是怎么发生的呢？那就是 ——这基本上是在起并发作用的那个事件循环所发生的，简而言之，是事件循环导致了这件事情的发生，而且这体现了并发……即当你这个JS文件还在运行代码的时候，还有其它线程在处理诸如setTimeout这样的任务……
 
 对，所以我一直有点说谎，即告诉你JavaScript一次只能做一件事……换言之就是不能边吃饭边看电视，只能吃完饭后才能看电视……所以是谁帮助了我可以边吃饭边看电视呢？——是event loop……
+
+#### Concurrency & the Event Loop
+
+> One thing at a time.
+>
+> except not really.
+
+当然，**V8引擎同一个时间只能做一件事**这是事实！这可没有欺骗你们哈！如当V8引擎在执行其他代码的时候，它（**是指浏览器还是V8引擎？**应该是V8引擎吧！）无法同时发出AJAX请求；当V8引擎在执行另一个代码时，它也无法同时执行setTimeout。而我们之所以可以同时做事情的原因是浏览器不仅仅只有V8引擎……
+
+> So, remember this diagram, the JavaScript Runtime can do one thing at a time, but the browser gives us these other things, gives us these we shall APIs, these are effectively threads, you can just make calls to, and those pieces of the browser are aware of this concurrency kicks in. If you're back end person this diagram looks basically identical for node, instead of web APIs we have C++ APIs and the threading is being hidden from you by C++.
+
+所以，请记住这个图表，V8引擎只能有一个call stack，意味着V8引擎只能管着手头上的那件事（执行整个js文件），但是浏览器给了我们做其他事情的机会，给了我们这些我们应该要有的API，这些实际上是线程，你可以直接调用，而浏览器的这些部分也意识到了这种并发性。如果你是后端人员，那么这个图对于Node来说看起来基本相同，当然这其中并不是webAPIs，我们有C++ API，线程被c++隐藏起来。
+
+> 这个翻译不太靠谱！不过大致理解一下就好了！
+
+![1527058845238](img/02/1527058845238.png)
+
+> 按照我目前的理解，onClick、onLoad、onDone等表示指向callback的地址！即它们都是一个个callback来的
+
+这是一张图很全面地展示了浏览器是如何运行代码的！下面有这样一段代码：
+
+![1546577993224](img/02/1546577993224.png)
+
+和以前一样，运行代码， `cconsole.log('Hi')` ，显然在Console中打印了一个`hi`，这很简单。
+
+![1546580585267](img/02/1546580585267.png)
+
+接着下一行语句，我们可以看到当我们调用setTimeout时会发生什么！可以看到，我们将一个callback和延迟（5000ms）传递给setTimeout作为形参来调用它。关于setTimeout，它是浏览器提供给我们的API，它不存在于V8源代码中，它是我们的JavaScript代码在V8引擎跑的时候所得到的额外的东西……接着浏览器会为你启动一个计时器，然后它将会为你处理倒计时，同时这意味着我们的setTimeout调用已经完成了……所以我们可从stack中pop它出来了，那么接下来就是运行下一行语句了！
+
+Console中打印一个 `JSConfEU`后，意味着没有语句可以运行了，所以就清空了这个stack……
+
+目前，我们在Web API中还有个计时器，5s之后它就会完成！
+
+5s之后，web API不能就这么开始修改你代码，即当它准备好（倒计时结束后）时，它不能直接把东西（那个callback）扔到stack上，如果它真得这样做了，那么它就会随机出现在代码中间，显然stack中的代码就会混乱起来了，毕竟代码运行得好好的，突然来了一个不速之客说「正在运行的代码，你可以休息一下了，轮到我了」，所以这两个代码就会产生冲突！
+
+> 注：其实也就是说如果stack中还有很多代码需要执行，那么即便你倒计时结束了，也不会让你执行这个callback……除非stack中已经空空如也了！
+
+所以这就是任务队列或者说是回调队列出现的原因了，因此，web API就会把callback扔到task queue中而不是stack中……
+
+![1546580880119](img/02/1546580880119.png)
+
+总之，任何Web API都会在自己的处理（如倒计时、网络请求、监听事件发生 ……）完成后将回调推送到任务队列中去……
+
+最后我们来到本次的演讲主题——事件循环！
+
+事件循环是个什么鬼东西？它就像整个等式（equation，平衡？方程？）中最简单的一小段，它有一个非常简单的工作，那么这是什么工作呢？——它的工作就是查看stack和任务队列。
+
+> 这是在判断吗？就像这样： 
+>
+> ```js
+> if (stack == null && taskQueue !== null) { 
+> 	stack.push(taskQueue.shift())
+> }
+> ```
+
+如果stack为空，那么它将会获取队列上的第一个东西，并将其推到可以有效运行它的stack上。
+
+上图中，我们可以看到stack是空的，任务队列上有一个回调，事件循环在运行并且说着「我得做点什么，如把回调推到堆栈上。」
+
+记住，堆栈就像JavaScript的领土一样，即我们需要通过event loop把callback回传到V8里面，这样回调就出现在堆栈里，然后运行…在Console中打印`there`，然后清空stack，这样一来我们就完成了对这段代码的运行探讨……
+
+![1546587255511](img/02/1546587255511.png)
+
+> 我之前有了解到，回调即是作为一个函数的形参，并且在这个函数的函数体中被调用！
+>
+> 现如今，我可以理解异步这种回调了，它的回在于cb从stack中出去，然后又回到stack中去！
+
+明白了吗？我身边的每一个人？——Awesome（棒极了）!
+
+现在我们可以看到这是如何工作的……对吧！
+
+可能是你第一次接触异步的时候，因为一些奇怪的原因，有人说你必须在调用setTimeout时，所传的延迟是个0才行！即想要让你以0时间运行这个callback……可是我为什么要把callback包装在一个setTimeout中呢？直接运行不就好了吗？当然，请丢掉你脑子已有的认识，这就像是你第一次碰到这个，如果你像我一样，即我能够看到它在做什么，但是我不知道为什么会产生这样的结果哈！……
+
+而这其中的原因通常是，如果你试图将某些事情推迟，然后直到stack空空如也之后才去做的话，那么就用这个setTimeout把这个callback给包裹起来吧！
+
+![1546589141250](img/02/1546589141250.png)
+
+我们知道，如果你写了JavaScript，我们会看到相同的结果，我们会在Console中看到`Hi`、 `JSConfEU`，而`there`将会出现在最后面……
+
+我们可以看到这是怎么发生的。
+
+ setTimeout为0延迟，那么现在它将立即完成并将其推送到队列中去，记住我之前所说关于事件循环的那些事儿，它必须等到堆栈清空之后才能将回调推送到堆栈中去，所以你的stack将会继续运行。首先在Console中打印一个“`Hi`”，然后处理这个setTimeout，接着打印“`JSConfEU`”，接着清空stack。
+
+那么现在事件循环就可以启动了，即旋转一圈，像是把callback推送到stack中一样！之后就可以调用这个回调了……
+
+setTimeout的延迟为0的这个例子就像是**不管出于什么原因，都将代码的执行推迟到堆栈的末尾或者说是直到堆栈被清空**所说的那样
+
+言归正传，所有这些web APIs都以相同的方式工作。 
+
+![1546590593160](img/02/1546590593160.png)
+
+如果我们有AJAX请求，那么我们使用了一个回调然后向URL发出了AJAX请求，而这其中的工作原理是相同的！
+
+首先在Console中打印一个Hi，然后运行下一行语句，即发送一个AJAX请求，由于运行AJAX请求的代码并不存在于V8中，而是作为web API存在于浏览器中，因此我们把这个回调扔到webAPI中去了，接着您的代码就可以继续运行下去了，而不是需要等待响应才能进行下一步……
+
+直到XHR请求完成后，或者它可能永远不会完成……
+
+![1546591563158](img/02/1546591563158.png)
+
+> 这个请求是怎么做到的？换句话说这些线程是如何做到的？用到IO？是用C++代码吗？不知道哈！当然这也不是我目前所要关心的，我只需要知道 `$.get(……)`这行语句已经运行完毕了……而其中的回调函数将会拿到一些data，然后扔到task queue中去，接着就看事件循环的操作了！
+>
+> 很多时候，stack中已经被清空了，但是请求还没有完成……所以很多时候，在我们开始发起请求之前都会加一个过渡动画，等请求完成后，就执行这个callback——首先去掉过渡动画，然年接着就开始渲染数据了！
+
+假如请求完成了，就把callback扔到任务队列中去，**✎：**
+
+![1546592364169](img/02/1546592364169.png)
+
+接着就轮到事件循环干活了，一旦发现stack清空了，那么事件循环就启动了，即把这个callback推送到stack中，然后V8就可以执行这个callback了！
+
+![1546592283234](img/02/1546592283234.png)
+
+好了，这就是异步调用发生时所发生的一切了……
+
+> Let's do a crazy complicated example, I hope this going to work, if you haven't realized all this is in keynote there's like I don't know 500 animation steps in this whole deck.
+
+![1546593160320](img/02/1546593160320.png)
+
+## ★一个工具
+
+作者编写了一个V8在工作时的可视化工具——[loupe](http://latentflip.com/loupe)
+
+
+
+
 
 
 
@@ -215,6 +347,30 @@ console.log输出`Hi`，对吧！接着我们运行`setTimeout`，但我们把co
 
   总之理解一个东西出现两次疑惑或者在解决一次疑惑的过程中又遇到了疑惑，那么你就不要理解了……
 
+- 如果你能对这段即将运行的代码，即对JavaScript的运行机制有一个可视化的运行过程，那么这将会对你理解这段代码的逻辑起到很大的帮助！
+
+- 不知为何，我觉得事件二字是个不好的翻译，我觉得我比较能接受把event叫做行为、动作、活动，用户做出了某个活动，然后就会相应的反馈给用户，如背后是运行了一个callback……
+
+  > 事件是您在编程时系统内发生的动作或者发生的事情，系统通过它来告诉您在您愿意的情况下您可以以某种方式对它做出回应。例如：如果您在网页上单击一个按钮，您可能想通过显示一个信息框来响应这个动作。
+
+  事件就是要响应的事，即可以理解为一个callback或者说是「用户的行为以及浏览器根据这个行为所作出的一系列响应统称为事件」？
+
+  所以我可以理解为：`事件 = 用户行为+callback`吗？
+
+  **➹：**[事件介绍 - MDN](https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript/Building_blocks/Events)
+
+- 永不阻塞
+
+  > 事件循环模型的一个非常有趣的特性是，与许多其他语言不同，JavaScript 永不阻塞。 处理 I/O 通常通过事件和回调来执行，所以当一个应用正等待一个 [`IndexedDB`](https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API) 查询返回或者一个 [`XHR`](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)请求返回时，它仍然可以处理其它事情，比如用户输入。
+  >
+  > 遗留的例外是存在的，如 `alert` 或者同步 XHR，但应该尽量避免使用它们。注意，[例外的例外也是存在的](https://stackoverflow.com/questions/2734025/is-javascript-guaranteed-to-be-single-threaded/2734311#2734311)（但通常是实现错误而非其它原因）。
+
+  **➹：**[并发模型与事件循环 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
+
+- 突然发觉我们所看到的网页，假如存在JavaScript代码的话，都是把JS给执行了一遍了的……此刻栈和堆中始终会存在有很多数据……当用户作出某个动作的时候，那些在任务队列中的callback就会被调用执行了……
+
+
+
 ## ★Q&A
 
 ### ①console.log的返回值问题
@@ -262,6 +418,109 @@ console.log输出`Hi`，对吧！接着我们运行`setTimeout`，但我们把co
 **➹：**[子曰五溪](https://mp.weixin.qq.com/s/h3QfVdWyzmiUt-HSSoiJjQ?)
 
 **➹：**[并发模型与事件循环 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
+
+### ④去掉txt文件中的回车？
+
+由于在使用翻译插件的过程中，有句子因为回车而断开，导致翻译不顺畅，所以我就用了sublimeText的正则替换来把回车给去掉：
+
+![1546508455176](img/02/1546508455176.png)
+
+更进一步：
+
+![1546579532432](img/02/1546579532432.png)
+
+**➹：**[批量去掉或替换文本中的换行符（notepad++、sublime text） - hgg923的专栏 - CSDN博客](https://blog.csdn.net/hgg923/article/details/43228729)
+
+### ⑤关于JavaScript runtime？
+
+有人说这是V8引擎哈！即这是JavaScript的运行环境哈！
+
+摘录了这个答案：[Runtime, Engine, VM 的区别是什么？ - 沈万马的回答 - 知乎](https://www.zhihu.com/question/34634496/answer/59537636)
+
+> 这就是个WiFi和WLAN关系的问题嘛。
+> Runtime是指用于支持程序运行时的组件，它可以是个Engine和/或VM。
+> VM是一种系统抽象，它提供代码执行所需的API环境。Engine是一种处理抽象，它负责将代码变为底层可执行代码。
+> 一个运行时，可以是VM和Engine中的一种，也可以同时是两者。当然也可以两者都不是。
+>
+> 以题主的例子而言，V8是JS的Engine，但同时它也提供了环境，所以它也是VM。
+> JVM是Java的VM，但它也负责代码的转换，所以它也是Engine。
+> 之所以习惯上JS的称Engine，是因为JS最初并没有明确的VM概念，也就是说它并没有明确地定义一套环境。而Java的称VM，也是因为早期JVM要强调它提供了环境，而不光光用来解释代码。
+>
+> 至于其他的还有一些例子：
+>
+> VC++ Runtime，它提供了API环境，但它并不抽象系统，也不翻译代码，所以它是另一种Runtime。类似的还有VB Runtime和MFC。
+>
+> .Net Framework，它提供了API，抽象了系统，翻译代码，之所以叫它Framework大概是为了显得大气。
+
+**➹：**[node.js - What is javascript runtime..? - Stack Overflow](https://stackoverflow.com/questions/30838412/what-is-javascript-runtime)
+
+**➹：**[Runtime, Engine, VM 的区别是什么？ - 知乎](https://www.zhihu.com/question/34634496)
+
+### ⑥线程是什么？
+
+在此之前，你需要了解进程的概念：
+
+> 进程（英语：process），是指计算机中已运行的**程序**。目前，进程本身不是基本运行单位，而是线程的容器。程序本身只是指令、数据及其组织形式的描述，**进程才是程序（那些指令和数据）的真正运行实例**。
+
+关于进程的状态：
+
+> 进程在运行时，状态（*state*）会改变。所谓状态，就是指**进程目前的动作**：
+>
+> - 新生（*new*）：进程新产生中。
+> - 运行（*running*）：正在运行。
+> - 等待（*waiting*）：等待某事发生，例如等待用户输入完成。亦称“阻塞”（*blocked*）
+> - 就绪（*ready*）：[排班中](https://www.wikiwand.com/zh-cn/%E6%8E%92%E7%A8%8B)，等待CPU。
+> - 结束（*terminated*）：完成运行。
+>
+> 各状态名称可能随不同操作系统而相异；对于单CPU系统（UP），任何时间可能有多个进程为等待、就绪，但**必定仅有一个进程在运行**。
+
+线程：
+
+> 线程（英语：thread）是操作系统能够进行**运算调度的最小单位**。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，**一个进程中可以并发多个线程**，**每条线程并行执行不同的任务**。在Unix System V及SunOS中也被称为**轻量进程**（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程
+
+关于线程的状态：
+
+> 线程有四种基本状态，分别为：
+>
+> - 产生（spawn）
+> - 中断（block）
+> - 非中断（unblock）
+> - 结束（finish）
+
+我在想这些线程是不是在进程处于运行状态时才会产生……
+
+**➹：**[进程 - Wikiwand](https://www.wikiwand.com/zh-cn/%E8%A1%8C%E7%A8%8B)
+
+**➹：**[线程 - Wikiwand](https://www.wikiwand.com/zh-cn/%E7%BA%BF%E7%A8%8B)
+
+**➹：**[多核 CPU 和多个 CPU 有何区别？ - 知乎](https://www.zhihu.com/question/20998226)
+
+### ⑦定时器原理？
+
+**➹：**[JavaScript定时器原理分析 - 谢灿勇 - 博客园](http://www.cnblogs.com/st-leslie/p/6082450.html)
+
+**➹：**[浅谈定时器原理及应用 - 简书](https://www.jianshu.com/p/1e7c6efc83dc)
+
+### ⑧事件都是异步的吗？
+
+或者我应该问事件是阻塞的吗？
+
+![1546574616489](img/02/1546574616489.png)
+
+| 事件      | 触发条件                                                     |
+| --------- | ------------------------------------------------------------ |
+| `onload`  | 当请求成功完成时触发，此时`xhr.readystate=4`                 |
+| `onerror` | 在请求过程中，若发生`Network error`则会触发此事件（若发生`Network error`时，上传还没有结束，则会先触发`xhr.upload.onerror`，再触发`xhr.onerror`；若发生`Network error`时，上传已经结束，则只会触发`xhr.onerror`）。**注意**，只有发生了网络层级别的异常才会触发此事件，对于应用层级别的异常，如响应返回的`xhr.statusCode`是`4xx`时，并不属于`Network error`，所以不会触发`onerror`事件，而是会触发`onload`事件。 |
+
+突然觉得这只是为了处理阻塞而存在的事件循环……毕竟如果执行栈中有很慢的代码的话，那么此时这个页面是无法和用户交互的！
+
+如果按照该你阮一峰大神的理解，我可以认为如果事件触发了，那么就会在把其中的callback扔到消息队列中去！
+
+反正函数最终的运行都会在call stack中！
+
+**➹：**[异步调用和单线程，多线程的疑惑？ - 知乎](https://www.zhihu.com/question/47371217)
+
+**➹：**[JavaScript 既是单线程又是异步的，请问这二者是否冲突，以及有什么区别？ - 知乎](https://www.zhihu.com/question/20866267)
 
 
 
