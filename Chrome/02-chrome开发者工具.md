@@ -153,6 +153,56 @@ CSS样式审查面板是一个非常有用的面板，实际开发中，有时�
 
    ![1546956534918](img/02/1546956534918.png)
 
+---
+
+#### 一些你想不到的技巧
+
+**①一秒钟让Chrome变成所见即所得的编辑器**
+
+在控制台中输入这个`document.body.contentEditable=true`，然后敲下回车执行即可！
+
+![1546957228971](img/02/1546957228971.png)
+
+**②选取DOM元素**
+
+之前我想要获取某个DOM对象的话，就得为该DOM节点添加id属性才行，不过现在不需要了：
+
+![1546957834612](img/02/1546957834612.png)
+
+
+
+当然，这是在控制台里，你才可以这样用！
+
+不管 `$('tagName') 、$('.class')、 $('#id') 还是 $('.class #id')` 等类似的选择器，都相当于原生JS的`document.querySelector('')` 方法。这个方法返回第一个匹配选择规则的DOM元素。
+
+在Chrome的控制台里，你可以通过 `$$('tagName') 或者 $$('.className') `（记得是两个`$$`符号）来选择所有匹配规则的DOM元素。选择返回的结果是一个数组，然后你就可以通过数组的方法来访问其中的单个元素了！
+
+**③获取某个DOM元素绑定的事件**
+
+源码：
+
+```js
+<button id='btn'>点我!</button>
+<script type="text/javascript">
+    btn.onclick = function() { console.log('我被点击了……')}
+    btn.addEventListener('mouseover',() => {
+        console.log('有鼠标移到了我身上……')
+    })
+</script>
+```
+
+![1546959780369](img/02/1546959780369.png)
+
+来到某个事件的回调，可以这样：`getEventListeners($('selector')).eventName[0].listener`
+
+这里的 eventName 表示某种事件类型
+
+---
+
+
+
+
+
 ## ★参考链接
 
 **➹：**[概述 · Chrome 开发者工具](http://shouce.jb51.net/chrome/jian-pan-kuai-jie-jian-he-ui-kuai-jie-jian-can-kao/bian-ji-yang-shi.html#%E7%BC%96%E8%BE%91%E6%A0%B7%E5%BC%8F)
@@ -165,5 +215,5 @@ CSS样式审查面板是一个非常有用的面板，实际开发中，有时�
 
 - 有时间就去看看这个：
 
-  **➹：**[Chrome 开发者工具  -  Tools for Web Developers  |  Google Developers](https://developers.google.com/web/tools/chrome-devtools/?hl=zh-cn)
+  **➹：**[Chrome 开发者工具  -  Tools for Web Developers  -  Google Developers](https://developers.google.com/web/tools/chrome-devtools/?hl=zh-cn)
 
