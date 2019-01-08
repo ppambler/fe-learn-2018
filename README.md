@@ -14,6 +14,13 @@
 
 - [代码时间](http://codetimecn.com/)
 - [知乎上有哪些在前端开发领域的高质量回答？ - 知乎](https://www.zhihu.com/question/20246142/answer/14470387)
+- [热门分享 - 前端头条](https://toutiao.io/c/fe)
+
+## ★深入了解的文章
+
+**➹：**[认识 V8 引擎 - 知乎](https://zhuanlan.zhihu.com/p/27628685)
+
+**➹：**[CSS 那么多属性，而且每个属性都有多个值怎么记？ - 知乎](https://www.zhihu.com/question/31317160)
 
 ## ★目录
 
@@ -26,6 +33,7 @@
   - [02-rendering-engine](./Browser/02-rendering-engine.md)
 - [Chrome](./Chrome/README.md)
   - [01-life of a pixel](./Chrome/01-life-of-a-pixel.md)
+  - [02-chrome开发者工具](./Chrome/02-chrome开发者工具.md)
 - [Regex](./Regex/README.md)
   - [01-初认识](./Regex/01-初认识.md)
   - [02-regex入门](./Regex/02-regex入门.md)
