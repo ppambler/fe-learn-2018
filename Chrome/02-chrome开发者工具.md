@@ -378,6 +378,8 @@ $_
 
 **➹：**[Chrome开发工具Elements面板(编辑DOM和CSS样式)详解-JavaScript编程学院-IT学院](http://www.itxueyuan.org/view/6708.html)
 
+**➹：**[天啦噜！原来Chrome自带的开发者工具还能这么用！ - 知乎](https://zhuanlan.zhihu.com/p/22665710)
+
 ## ★总结
 
 - 有时间就去看看这个：
