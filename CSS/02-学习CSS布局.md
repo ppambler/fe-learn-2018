@@ -12,6 +12,8 @@ typora-copy-images-to: img\02
 
 ## ★资料
 
+**➹：**[Learn CSS Layout](http://learnlayout.com/)
+
 **➹：**[学习CSS布局](http://zh.learnlayout.com/)
 
 ## ★没有布局
@@ -515,7 +517,355 @@ section {
 
 ## ★百分比宽度（percent width）
 
+百分比是一种相对于包含块的测量（measurement）单位。 它非常适合图像：这里我们制作的图像始终是其容器宽度的50％。 尝试缩小页面以查看会发生什么！
 
+```css
+article img {
+  float: right;
+  width: 50%;
+}
+```
+
+![1549094288867](img/02/1549094288867.png)
+
+缩小页面测试：
+
+![1549095029377](img/02/1549095029377.png)
+
+可见图片的宽度始终是其容器宽度的50%……
+
+> 当然，您甚至还可以同时使用 `min-width` 和 `max-width` 来限制图片的最大或最小宽度……
+
+### ◇百分比宽度布局
+
+您可以使用百分比进行布局，但这可能需要更多工作。 在下面的示例中，当窗口宽度很窄时，`nav` 的内容开始以一种令人不快的方式换行了。总而言之，选一种最合适你的内容的方式。。
+
+窗口宽度很窄的情况就像这样：
+
+![1549095705486](img/02/1549095705486.png)
+
+---
+
+```css
+nav {
+  float: left;
+  width: 25%;
+}
+section {
+  margin-left: 25%;
+}
+```
+
+![1549094573045](img/02/1549094573045.png)
+
+当这种布局太窄时，`nav` 就会被挤扁。 更糟糕的是，你不能在nav上使用`min-width`来修复它，因为右边的那列可不会尊重它
+
+> nav已经脱离了文档流了，不过其它盒子只是部分无视它，如它的文本内容还是可以被其它盒子给发现的！
+>
+> 我以为按照我所想的，那section里的文本内容是不会覆盖nav中的内容，结果还是覆盖了！或者说是section的橙黄色框碰到nav中的内容就停止了
+>
+> 可没有想到的是根据我所测试的结果发现，这种想法是错误的，因为section就直接完全无视了！
+>
+> 而且你也不能对`nav`使用`min-width`来解决这种情况！
+
+## ★媒体查询
+
+ “响应式设计”是一种使网站“响应”它所显示的浏览器和设备的策略......无论如何都看起来很棒。
+
+> “响应式设计（Responsive Design” 是一种让网站针对不同的浏览器和设备“呈现”不同显示效果的策略，这样可以让网站在任何情况下显示的很棒！
+
+媒体查询是执行此操作的最强大工具。 让我们采用使用百分比宽度的布局，并在浏览器太小而无法放入侧边栏中的菜单时将其显示在一列（一栏）中：
+
+> 媒体查询是做此事所需的最强大的工具。让我们使用百分比宽度来布局，然后在浏览器变窄到无法容纳侧边栏中的菜单时，把布局显示成一列：
+
+```css
+@media screen and (min-width:600px) {
+  nav {
+    float: left;
+    width: 25%;
+  }
+  section {
+    margin-left: 25%;
+  }
+}
+@media screen and (max-width:599px) {
+  nav li {
+    display: inline;
+  }
+
+```
+
+大于等于600px的结果：
+
+> 容器中是双栏的效果
+
+![1549121499678](img/02/1549121499678.png)
+
+小于600px的结果：
+
+> 这里就是单栏的效果了！
+
+![1549121434493](img/02/1549121434493.png)
+
+>  现在，当你调整浏览器的大小时，它比以往更酷了！
+>
+> 当你调整浏览器窗口大小时，布局比以前更酷了！
+
+田田（Tada）！ 现在我们的布局在移动浏览器上看起来也很棒。 这里有[一些同样使用媒体查询的热门网站](https://mediaqueri.es/mse/)。 除了`min-width` 和 `max-width`之外，在[MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)中你还可以学到更多有关媒体查询的知识。
+
+### ◇友情提示
+
+使用[meta viewport](https://dev.opera.com/articles/an-introduction-to-meta-viewport-and-viewport/)之后可以让你的布局在移动浏览器上显示的更好。
+
+## ★inline-block
+
+你可以创建很多网格来铺满浏览器。
+
+>  您可以创建一个填充浏览器宽度并且换行得很好的盒子网格（grid）
+
+在过去很长的一段时间内使用 `float` 是一种选择，但是使用 `inline-block` 会更简单。
+
+`inline-block` 元素类似于 `inline`元素，但它们可以具有宽度和高度。
+
+让我们看下使用这两种方法的例子：
+
+### ◇困难的方式（使用浮动）
+
+```css
+.box {
+  float: left;
+  width: 200px;
+  height: 100px;
+  margin: 1em;
+}
+.after-box {
+  clear: left;
+}
+```
+
+![1549125663102](img/02/1549125663102.png)
+
+> 1. 我在浮动！
+> 2. 我在使用 clear，所以我不会浮动到上面那堆盒子的旁边。
+>
+> 浏览器窗口宽度减小时，这些盒子网格也很自然地就换行了！
+
+### ◇简单的方式（使用inline-block）
+
+你可以用 `display` 属性的值 `inline-block` 来实现相同的效果。
+
+```css
+.box2 {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  margin: 1em;
+}
+```
+
+![1549126182838](img/02/1549126182838.png)
+
+> 1. 我是一个行内块！
+> 2. 这次我可没有用 `clear` 。太棒了！
+
+你得做些额外工作来让[IE6和IE7支持](http://blog.mozilla.org/webdev/2009/02/20/cross-browser-inline-block/) `inline-block` 。有些时候人们会谈到 `inline-block` 触发一些叫做 `hasLayout` 的东西，你只需要知道那是用来支持旧浏览器的。如果你对此很感兴趣，可以在前面那个链接中找到更详细的信息。否则，我们就继续下去吧。
+
+**➹：**[haslayout详解 - 小火柴的蓝色理想 - 博客园](https://www.cnblogs.com/xiaohuochai/p/4845314.html)
+
+> haslayout是IE7-浏览器的特有属性。
+>
+> hasLayout是一种只读属性，有两种状态：true或false。当其为true时，代表该元素有自己的布局，否则代表该元素的布局继承于父元素。
+>
+> [注意]通过`element.currentStyle.hasLayout`可以得出当前元素的hasLayout情况
+
+## ★inline-block布局
+
+你也可以使用 `inline-block` 来布局。有一些事情需要你牢记：
+
+- `vertical-align` 属性会影响到 `inline-block` 元素，你可能会把它的值设置为 `top` 。
+
+- 你需要设置每一列（栏）的宽度
+
+- 如果HTML源代码中元素之间有空格，那么列（栏）与列（栏）之间会产生空隙
+
+  > 如果列（栏）之间存在任何空格，则列（栏）之间将存在间隙
+  >
+  > 那么如何解决这些空隙呢？
+  >
+  > **➹：**[去除inline-block元素间间距的N种方法 « 张鑫旭-鑫空间-鑫生活](https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/)
+
+```css
+nav {
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+}
+.column {
+  display: inline-block;
+  vertical-align: top;
+  width: 75%;
+}
+```
+
+![1549157462949](img/02/1549157462949.png)
+
+## ★column（栏？列？）
+
+这里有一系列新的CSS属性，可以帮助你很轻松的实现文字的多列布局。让我们瞧瞧：
+
+> 有一组新的CSS属性可以让您轻松制作多列文本，看一看：
+
+```css
+.three-column {
+  padding: 1em;
+  -moz-column-count: 3;
+  -moz-column-gap: 1em;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 1em;
+  column-count: 3;
+  column-gap: 1em;
+}
+```
+
+![1549158303660](img/02/1549158303660.png)
+
+CSS columns是很新的标准，所以你需要使用前缀，并且它不被[IE9及以下和Opera Mini](http://caniuse.com/#search=column)支持。还有一些与column 相关的属性，[点击这里了解更多](http://www.quirksmode.org/css/multicolumn.html)。否则让我们讨论下一个主题。
+
+## ★flexbox
+
+新的 `flexbox` 布局模式被用来重新定义CSS中的布局方式。很遗憾的是最近规范变动过多，导致各个浏览器对它的实现也有所不同。不过我仍旧想要分享一些例子，来让你知道即将发生的改变。这些例子目前只能在支持 flexbox 的 Chrome 浏览器中运行，基于[最新的标准](http://www.w3.org/TR/css3-flexbox/)。
+
+> 新的`flexbox`布局模式准备（poised）重新定义我们在CSS中所进行的布局方式。 不幸的是，规范最近发生了很大的变化，因此它在不同的浏览器中的实现方式也有所不同。 不过，我想分享几个例子，以便你知道即将发生的事情。 这些示例目前仅适用于使用[最新版本标准](http://www.w3.org/TR/css3-flexbox/)的[某些浏览器](http://caniuse.com/flexbox)。
+
+网上有不少过时的 flexbox 资料。 如果你想要了解更多有关 flexbox 的内容，[从这里](http://css-tricks.com/old-flexbox-and-new-flexbox/)学习如何辨别一份资料是否过时。我已经写了一份[关于最新标准的详细文章](http://weblog.bocoup.com/dive-into-flexbox/)。
+
+> 有很多过时的flexbox资源。 如果您想了解有关flexbox的更多信息，请从[此处](http://css-tricks.com/old-flexbox-and-new-flexbox/)了解如何识别资源是否是最新的。 我[使用最新语法编写了一篇详细的文章](http://weblog.bocoup.com/dive-into-flexbox/)。
+
+使用flexbox你还可以做的更多；这里只是一些让你了解概念的例子：
+
+> 你可以用flexbox做更多的事情；这里只是一些让你了解它的理念（idea）的几个例子：
+>
+> 如可以实现简单布局、牛逼的布局、还有常用的绝对居中布局……
+
+### ◇使用 Flexbox 的简单布局
+
+```css
+.container {
+  display: -webkit-flex;
+  display: flex;
+}
+nav {
+  width: 200px;
+}
+.flex-column {
+  -webkit-flex: 1;
+          flex: 1;
+}
+```
+
+> 关于flex值为1：
+>
+> 下面两个是等价的
+>
+> ```css
+> .item {flex: 1;}
+> .item {
+>     flex-grow: 1;
+>     flex-shrink: 1;
+>     flex-basis: 0%;
+> }
+> ```
+>
+> 所以flex-colum占据了所有的剩余空间，也就是说这个nav盒子只要这个容器的200px宽就好了，剩下的都给`section.flex-column`这个盒子吧！
+>
+> 至于flex-shrink为1表示的是：如果空间不足，该item将缩小，而且负值对该属性无效。
+>
+> 而flex-basis呢？
+>
+> 则是**当主轴为水平方向的时候**且`flex-basis` 值为 0 % 时，是把该item视为零尺寸的，也就是说即使你声明该 `section.flex-column`这个盒子 尺寸为 600px，也并没有什么卵用。
+>
+> **➹：**[Flex布局 - fe-learn-2018](https://ppambler.github.io/fe-learn-2018/CSS/01-Flex%E5%B8%83%E5%B1%80.html)
+
+![1549159384127](img/02/1549159384127.png)
+
+> 1. Flexbox好容易使用！
+>
+> 之前都是围绕一个容器来展开的多栏布局，如今使用了flexbox之后依旧如此！
+
+### ◇使用 Flexbox 的牛逼布局
+
+```css
+.container {
+  display: -webkit-flex;
+  display: flex;
+}
+.initial {
+  -webkit-flex: initial;
+          flex: initial;
+  width: 200px;
+  min-width: 100px;
+}
+.none {
+  -webkit-flex: none;
+          flex: none;
+  width: 200px;
+}
+.flex1 {
+  -webkit-flex: 1;
+          flex: 1;
+}
+.flex2 {
+  -webkit-flex: 2;
+          flex: 2;
+}
+```
+
+> `initial`这个值相当于是`flex: 0 1 auto`
+>
+> 关于flex-basis的默认值：auto，即item本来的大小, 这时候 item 的宽高取决于 width 或 height 的值。
+>
+> 而 `flex:none`则是`0 0 auto`，flex-grow的默认值为 0，表示如果存在剩余空间，也不放大；同理 flex-shrink 属性为 0，空间不足时，也不缩小
+
+![1549159549729](img/02/1549159549729.png)
+
+> 1. 当有空间，即空间足够时，我将是200px；如果没有空间，即空间不足时，我将缩小到100px，但不会更小。
+> 2. 无论窗口如何变化，我总是200px宽
+> 3.  我将填满剩余宽度的1/3
+> 4.  我将填满剩余宽度的2/3。
+>
+> 似乎这些盒子都不怎么考虑自身的高度！讲真自适应的高度也挺好的！
+>
+> 通过控制台缩小浏览器窗口我发现，元素是一层叠一层的，就像是PS里的图层概念一样！
+
+### ◇使用 Flexbox 的居中布局
+
+```css
+.vertical-container {
+  height: 300px;
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+```
+
+![1549159654192](img/02/1549159654192.png)
+
+> 1. CSS里总算是有了一种简单的垂直居中布局的方法了！
+>
+> 最后，使用flexbox在CSS中实现垂直居中显然很容易！
+
+## ★css frameworks（css框架）
+
+因为 CSS 布局很难使用，所以催生了不少 CSS 框架来帮助开发者。如果你想看看那么这里有一些。只有在框架的功能满足你的需求时，使用框架才是个好主意。掌握CSS的工作方式是无可替代的。因为 CSS 布局很难使用，所以催生了不少 CSS 框架来帮助开发者。如果你想看看那么这里有一些。只有在框架的功能满足你的需求时，使用框架才是个好主意。掌握CSS的工作方式是无可替代的。
+
+> 因为CSS布局非常棘手，所以有一些CSS框架可以来帮助简化布局。如果你想看的话，这里有一些。如果框架确实能够满足您的网站需要，那么使用框架只是一个好主意。不过，它们并不能代替你知道**CSS是如何工作的**。
+
+[![blueprint](img/02/blueprint.jpg)](http://www.blueprintcss.org/) [![unsemantic](img/02/unsemantic.png)](http://www.unsemantic.com/)[![bluetrip](img/02/bluetrip.jpg)](http://bluetrip.org/) [![bootstrap](img/02/bootstrap.jpg)](http://twitter.github.com/bootstrap/)[![susy](img/02/susy.jpg)](http://susy.oddbird.net/) [![foundation](img/02/foundation.png)](http://foundation.zurb.com/)[![kube](img/02/kube.png)](http://imperavi.com/kube/) [![groundwork](img/02/groundwork.gif)](http://groundworkcss.github.com/)[![semantic ui](img/02/semantic_ui.png)](http://semantic-ui.com/) [![Purecss](img/02/logo_pure.png)](http://purecss.io/)
+
+到此为止！如果你对本站有任何反馈，请在[Twitter](https://twitter.com/intent/tweet?source=webclient&text=%40_gsmith)上联系我！
 
 
 
@@ -524,7 +874,32 @@ section {
 ## ★总结
 
 - 看到有关布局的CSS属性，请在你的脑海中对该元素说「布局！布局！布局！……」
+
 - 当你想用有关布局的CSS属性时，请在你的脑海中对该元素说「我的兄弟会受我影响吗？我的行为对于父级、祖先辈元素会有联系吗？」
+
+- 我开始意识到看原文的意义，当你不理解翻译过来的中文所讲述的是什么东东的时候，或者说理解起来很吃力的时候，那么你就去看它的原文，即英文！
+
+- 感觉这一系列教程都指出了我们会经常遇到的点！然后提示我们要注意它们！
+
+- 我要去看的文章：
+
+  **➹：**[Monese - Media Queries](https://mediaqueri.es/mse/)
+
+  **➹：**[Dev.Opera — An Introduction to Meta Viewport and @viewport](https://dev.opera.com/articles/an-introduction-to-meta-viewport-and-viewport/)
+
+  **➹：**[Dive into Flexbox - design, tools and workflow - Bocoup](https://bocoup.com/blog/dive-into-flexbox)
+
+  **➹：**[[译]深入了解 Flexbox 伸缩盒模型 - 小影志](https://c7sky.com/dive-into-flexbox.html)
+
+- 一些牛逼的CSS框架：
+
+  **➹：**[Semantic UI](https://semantic-ui.com/)
+
+  **➹：**[Pure](https://purecss.io/)
+
+- 讲真关于CSS布局，我一直来都感到很头疼……有种很想使用框架的既视感！
+
+- 我之前有看过一些关于CSS布局的视频，不过我看来之后始终还是不会布局！因为它们并没有像这篇教程这样有始有终，当然目前似乎都打算使用了Grid布局了！
 
 ## ★Q&A
 
