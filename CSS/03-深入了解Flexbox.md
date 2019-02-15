@@ -313,6 +313,10 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 <script async src="//jsfiddle.net/Ambler/79m5k2h4/embed/html,css,result/"></script>
 
+`align-content`及其对multi-line flex 容器的影响的说明：
+
+![img](img/03/align-content-example.svg)
+
 **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#align-content-property)
 
 ### ◇flex-flow 伸缩方向与换行
@@ -330,7 +334,7 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 }
 ```
 
-
+**➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#flex-flow-property)
 
 
 
