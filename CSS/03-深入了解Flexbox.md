@@ -184,6 +184,8 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 在继续了解之前明白主轴和侧轴是至关重要的。Flexbox 中的一切都和这些轴有关。在我们所有的例子中，书写模式都是从左至右，从上到下，但是你需要记住**并不是所有的 Flexbox 都是这样的**。
 
+![img](img/03/flex-direction-terms.svg)
+
 ## ★flex容器的属性
 
 ### ◇flex-direction 伸缩流的方向
@@ -200,7 +202,145 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 可见，现在我们的Flex项目是垂直布局的
 
+### ◇justify-content 主轴对齐
 
+伸缩容器的 `justify-content` 属性用于调整主轴上伸缩项目的位置。可能的值为：
+
+- flex-start (默认)
+- flex-end
+- center
+- space-between
+- space-around
+
+这里我们设置 `justify-content` 为 `center` 让伸缩项目在主轴上居中对齐：
+
+<script async src="//jsfiddle.net/Ambler/j8ztbhq3/1/embed/html,css,result/dark/"></script>
+
+`flex-start`, `flex-end`, 和 `center` 一看就懂。`space-between` 和 `space-around` 则是分配伸缩项目之间空白空间的不同方法。这张规范中的图示很好的解释了一切：
+
+![img](img/03/flex-pack.svg)
+
+> 你可以看见最后那个，它是把剩余空间等比分配到flex item的两边，而倒数第二个则是把剩余空间扔到flex item与flex item之间去了
+>
+> 你可以想象成父亲在教导三个孩子该站到哪个位置上去
+
+### ◇align-items 侧轴对齐
+
+`align-items` 是一个和 `justify-content` 相呼应的属性。`align-items` 调整伸缩项目在侧轴上的定位方式。
+
+> align-items is complementary to justify-content.（`align-items` 是对 `justify-content` 的补充）
+
+可能的值有：
+
+- flex-start (default)
+- flex-end
+- center
+- baseline
+- stretch
+
+这里我们设置 `align-items` 为 `center` 让伸缩项目在侧轴上居中对齐：
+
+<script async src="//jsfiddle.net/Ambler/8vyohjdk/embed/html,css,result/"></script>
+
+和之前一样，`flex-start`, `flex-end`, 和 `center` 的意义显而易见。`stretch` 也很简单：它会将伸缩项目从侧轴起点拉伸到侧轴终点。`baseline` 则是让伸缩项目与它们的基线对齐。基线根据伸缩项目的内容计算得到。下面这张来自W3C标准的图例很好的解释了这些属性：
+
+![img](img/03/flex-align.svg)
+
+> 话说什么叫对齐呢？比如说「在数学上，线段是直线上两点间的一段」，那么对齐呢？是有条参考线吗？
+>
+> 这些元素大小不一，有些肥，有些瘦，有些高，有些矮，但它们都有共性，都是矩形盒子，有所谓的基线（除非咩有文本内容）、中线，也有父元素给它们的边界
+>
+> **➹：**[ppt排版技巧：论对齐原则的重要性 - 知乎](https://zhuanlan.zhihu.com/p/44269364)
+
+### ◇flex-wrap 伸缩行换行
+
+目前为止，每个伸缩容器都有且只有一个伸缩行。使用 `flex-wrap` 你可以为伸缩容器创建多个伸缩行。这个属性接受以下值：
+
+- nowrap (默认)
+- wrap
+- wrap-reverse
+
+如果 `flex-wrap` 设置为 `wrap`，在一个伸缩行容不下所有伸缩项目时，伸缩项目会换行到一条新增的伸缩行上。新增的伸缩行根据**侧轴的方向**添加。
+
+我们使用 `flex-wrap` 来看个例子：
+
+<script async src="//jsfiddle.net/Ambler/5p1wL4mv/embed/html,css,result/dark/"></script>
+
+`wrap-reverse` 和 wrap 一样，只是新的伸缩行会被添加到侧轴的反方向上。
+
+> 这个似乎不是很好理解哈！于是就去看了w3c：
+>
+> **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#flex-wrap-property)
+>
+> 有这么一段话描述这个属性：
+>
+> flex-wrap属性控制着Flex容器是否是单线（single-line）还是多线（multi-line），并且该Flex容器的横轴方向决定了新线的堆叠方向。如，容器默认是横的且从左往右，那么该线就是直接另起一行咯，如一叠纸一样……
+>
+> 还有就是flex容器默认是单线的，即flex items打死都不换行，为什么这么说呢？因为默认是nowrap值啊！如果是wrap值的话，那么此地不留爷自有留爷处……
+>
+> 当取值是 `wrap-reverse`时，结果是这样的：
+>
+> ![1550248407877](img/03/1550248407877.png)
+>
+> 可见新线的堆叠方向是侧抽的反方向，还有你可别想成是这样的：
+>
+> ![1550248841603](img/03/1550248841603.png)
+>
+> 为什么这样说呢？
+>
+> w3c中说到「当flex-wrap 的值是 wrap-reverse时,  cross-start 和 cross-end 的方向被交换了」，即它们俩位置颠倒了，**侧轴方向变为从下到上**了，所以1和2才会在底下
+>
+> 形象理解就是这样：
+>
+> ![1550249325206](img/03/1550249325206.png)
+>
+> 我靠单词拼错了……可见决定一个元素的开始需要主轴和侧轴同时决定，简而言之就是往原点那个角落扔个盒子即可！
+
+### ◇align-content 堆栈（stack）伸缩行
+
+`align-content` 会更改 `flex-wrap` 的行为。它和 `align-items` 相似，但是不是对齐伸缩项目，它对齐的是伸缩行。可能你已经想到了，它接受的值也很相似：
+
+- stretch (默认)
+- flex-start
+- flex-end
+- center
+- space-between
+- space-around
+
+这些值与 `justify-content` 和 `align-items` 中的值一样。
+
+在这个例子中，我们设置 `align-content` 为 `center`：
+
+<script async src="//jsfiddle.net/Ambler/79m5k2h4/embed/html,css,result/"></script>
+
+**➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#align-content-property)
+
+### ◇flex-flow 伸缩方向与换行
+
+`flex-flow` 是 `flex-direction` 和 `flex-wrap` 的缩写。
+
+> flex-flow: [flex-direction] [flex-wrap]
+
+举个例子：
+
+```css
+.flex-container {
+  -webkit-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+---
 
 ## ★总结
 
@@ -249,6 +389,14 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
   5. 咋用呢？——解释How，用起来吧！用到你自己的项目中去，用到你的工作中去……
   6. 总结？——从这当中我学到什么什么？改变了我以往的什么什么观念？对我目前的什么什么行为产生了什么什么改变？优点和缺点？在什么场景下就可以使用它？是否还有继续深入下去的必要？是否还有更好的姿势？……
 
+- 我不知道flex翻译成「伸缩」、「弹性工作制的」好不好，子元素因为父元素成为了flex container，变成了flex item，为此父元素具有控制子元素如何布局的能力，而且父元素的兄弟不会影响这些flex item，反过来flex item也不会影响它爸的兄弟……当然flex item也有了吃掉剩余空间的能力以及其它什么的能力等等……
+
+  如果按照目前的理解来看，翻译成「伸缩」是挺形象的，因为flex item给我的感觉就像是金箍棒……
+
+- 在翻译的时候，如果遇到概念（经常会出现的东西）就把它的英文给写出来！如 flex container、flex items、single-line……
+
+- 不知是不是看了上一篇布局教程的缘故，这次看flex布局轻松许多，还是说这篇有关flexbox的资料好呢？
+
 ## ★Q&A
 
 ### ①下图中NOTE、REC、CR等表示什么？
@@ -287,7 +435,25 @@ Concepts and Terminology：
 
 **➹：**[概念和术语有什么区别？_百度知道](https://zhidao.baidu.com/question/424263255335166292.html)
 
+### ③关于w3c的规范文档翻译？
 
+**➹：**[» W3C技术文档的中文翻译 - W3C中国](http://www.chinaw3c.org/cn-translation.html)
+
+**➹：**[层叠样式表2级修订版1（CSS 2.1）规范中文翻译](http://www.ayqy.net/doc/css2-1/cover.html)
+
+**➹：**[w3c-html-ig-zh/w3c-glossary: W3C翻译词汇表](https://github.com/w3c-html-ig-zh/w3c-glossary)
+
+**➹：**[W3CTranslation - Glossary](https://w3c-html-ig-zh.github.io/w3c-glossary/)
+
+**➹：**[w3c/chinese-ig: Web中文兴趣组](https://github.com/w3c/chinese-ig)
+
+**➹：**[★Glossary](https://www.w3.org/Glossary)
+
+### ④关于计算机辅助翻译？
+
+**➹：**[职业翻译们是否会用到类似google translate之类的辅助工具？ - 知乎](https://www.zhihu.com/question/23105140)
+
+**➹：**[计算机辅助翻译 - 知乎](https://www.zhihu.com/topic/19667925/hot)
 
 
 
