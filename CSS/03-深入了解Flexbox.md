@@ -186,6 +186,8 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 ![img](img/03/flex-direction-terms.svg)
 
+> 话说main sizes是不是指单行里多个item的size的总和呢？
+
 ## ★flex容器的属性
 
 ### ◇flex-direction 伸缩流的方向
@@ -317,6 +319,8 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 ![img](img/03/align-content-example.svg)
 
+> 可见该属性一般是针对多行的哈！与之类似的那个align-items显然是针对单行的！
+
 **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#align-content-property)
 
 ### ◇flex-flow 伸缩方向与换行
@@ -336,11 +340,265 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#flex-flow-property)
 
+## ★flex items的属性
+
+> 根据这种下面这张图的约定：
+>
+> ![img](img/03/v2-54a0fc96ef4f455aefb8ee4bc133291b_hd.jpg)
+>
+> main size就是单个item的尺寸？还是说一个flex item的宽就是TM的它自己定义的width，在这里的main size只是表示的是这个item在这个主轴是row的方向上，该元素的宽就叫做main size而已？
+>
+> 为啥叫尺寸呢？因为你无法确定此时这个元素的main 「size」是width还是height
+>
+> 直接看w3c的术语表：
+>
+> **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#box-model)
+
+**一个伸缩项目是一个伸缩容器的任何直接子元素，而且伸缩容器中的文本也会被视为一个伸缩项目。**
+
+伸缩项目中内容与普通流一样。举例来说，当一个伸缩项目被设置为浮动，你依然可以在这个伸缩项目中放置一个浮动元素。
+
+> The contents of Flex Items render as normal. For example, while setting float on a Flex Item does nothing, you could have a floated element inside of a Flex Item.
+>
+> 例如，当你在Flex项上设置float其实是没有任何作用的，所以你就可以在Flex项中包含浮动元素啦！
+
+flex items（注意它是有s的，表示是所有item）都有一个 *主轴长度(Main Size)* 和一个 *侧轴长度(Cross Size)*。
+
+> The Main Size is the size of the Flex Item in the dimention of the Main Axis. The Cross Size is the size of the Flex Item in the dimention of the Cross Axis. Effectively, the width or height of a Flex Item may be its Main Size or Cross Size depending on the Flex Container’s axes.
+
+main size是flex item在主轴这个维度上的尺寸。cross size是flex item在侧轴这个维度上的尺寸。或者说，一个伸缩项目的宽或高取决于flex容器的轴，可能就是它的主轴长度或侧轴长度。
+
+ 或者说，一个Flex项目的宽度或高度可能是其main轴或cross轴大小，具体取决于Flex容器的轴。
+
+> 或者说，一个伸缩项目的宽或高取决于伸缩容器的轴，可能就是它的主轴长度或侧轴长度。
+>
+> 说白了，就是一个item的宽高是不确定的，这要看flex 容器的xy轴的大小了！话说这关乎flex容器的宽高吗？还是说溢出的item也会被算作flex容器的轴大小你额？如
+>
+> ![1550292292857](img/03/1550292292857.png)
+
+下面的属性可以调整伸缩项目的行为：
+
+### ◇order 显示顺序
+
+`order` 是最简单明了的属性。设置伸缩项目的 order 可以调整它们渲染时的顺序。在这个例子中，我们设置其中一个伸缩项目的 `order` 为 -1，于是它被提前到了其他伸缩项目的最前面。
+
+<script async src="//jsfiddle.net/Ambler/2p86dsx9/embed/html,css,result/"></script>
+
+如果需要文档顺序和显示顺序不同时，这就是个很有用的功能了。
+
+如：
+
+![img](img/03/flex-order-example.png)
+
+> 可见这图显示了一个简单的选项卡式界面，其中活动窗口的选项卡始终是第一个，相关代码如下：
+>
+> ```css
+> .tabs {
+>   display: flex;
+> }
+> .tabs > .current {
+>   order: -1; /* Lower than the default of 0 */
+> }
+> ```
+
+还有：
+
+```html
+<!DOCTYPE html>
+<header>...</header>
+<main>
+   <article>...</article>
+   <nav>...</nav>
+   <aside>...</aside>
+</main>
+<footer>...</footer>
+```
+
+![In this page the header is at the top and the footer at the bottom, but the article is in the center, flanked by the nav on the right and the aside on the left.](img/03/flex-order-page.svg)
+
+> 可以看到article这个元素与其在DOM中的顺序是不一样的！
+
+**➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#order-property)
 
 
 
+### ◇margin 外边距
 
+你应该对 `margin: auto;` 的[这种用法效果](http://learnlayout.com/margin-auto.html)很熟悉了。在伸缩盒中，它也能做同样的事情，但是更加强大。一个 "auto" 的 margin 会合并（absorb/吸收）剩余的（extra/额外的）空间。它可以用来把伸缩项目挤到其他位置。
 
+这里我们在第一个伸缩项目上声明了 `margin-right: auto;`，导致了所有的剩余（额外的）空间被合并（吸收、吸纳）到该元素的右边去了：
+
+> 本来1、2、3号小盆友好好的排好队了，而突然，这个1号小盆右放了一个屁，把2、3号小盆友挤到它的最右边去了……毕竟1号的屁也是它本身的一部分，直到2、3号无路可逃，那些屁才不会占据它们的空间，显然他们此刻紧闭鼻子和嘴巴……
+
+<script async src="//jsfiddle.net/Ambler/efj7owhm/2/embed/html,css,result/"></script>
+
+> 我们通过审查元素可以看到：
+>
+> ![1550305098217](img/03/1550305098217.png)
+
+这里我们使用 `margin: auto;` 来重现经典CSS布局中的圣杯：真正的垂直居中：
+
+> 关于圣杯：圣物之意，即很高大尚的，很牛逼的东西，在这里也就说绝对居中在CSS布局中等同于圣杯一样重要，而我们通过flex布局就很容易实现它了！
+>
+> **➹：**[圣杯到底是什么？ - 知乎](https://www.zhihu.com/question/28953628)
+
+<script async src="//jsfiddle.net/Ambler/5enfhq0r/embed/html,css,result/"></script>
+
+我看了它代码：
+
+```html
+<style>
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    width: 300px;
+    height: 240px;
+    background-color: Silver;
+}
+
+.flex-item {
+    background-color: DeepSkyBlue;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+}
+</style>
+<div class="flex-container">
+	<div class="flex-item">I'm centered!</div>
+</div>
+```
+
+就一个flex容器加上一个`margin:auto`就搞定了！而且子元素不需要给定宽高，父元素也是如此！当然你给定了父元素高度，那么就会比较直观的显示它是绝对居中的，不管怎样，兜底的情况就是水平居中啦！只要给个flex容器以及对其直接子元素一个`margin:auto`即可！
+
+> 这个绝对居中的审查元素情况：
+>
+> ![1550305258878](img/03/1550305258878.png)
+
+---
+
+> 我觉得这个应用到移动端，做弹性的自适应挺好的，只要你不对元素写死宽高就好了！
+>
+> 还有感觉这个属性的作用类似于flex item中的某个能够吸收剩余空间的属性，这让我想起了ES6中的class的关键字，对，它是个语法糖，而在这里我可以认为 `flex-grow`也是个语法糖！
+
+### ◇align-self 侧轴对齐
+
+伸缩项目的 `align-self` 属性会有效地覆盖该项目的伸缩容器的 `align-items` 属性。它的值和 `align-items` 一样：
+
+> 似乎翻译不怎么翻译副词啊！副词表程度……
+
+- stretch (默认)
+- flex-start
+- flex-end
+- center
+- baseline
+
+在这个例子中我们为每个伸缩项目应用了不同的 `align-self` 值：
+
+<script async src="//jsfiddle.net/Ambler/uez39nfq/embed/html,css,result/"></script>
+
+我在这个例子中包含了两个基线对齐的Flex项目，因为它们的对齐方式只相对于彼此
+
+> 谁的文字离它们的爸爸边界最远那就选择谁！
+
+### ◇flex 伸缩性
+
+现在我们终于要开始设置伸缩盒的伸缩性了。`flex` 指定了一个伸缩项目该如何优先分配主轴上的剩余（free，可用）空间。
+
+让我们一次看一个常见的值：
+
+> flex是一个shorthand，即手短，少写点东西
+>
+> 它可有的值：`none | [ <‘flex-grow’> <‘flex-shrink’>? || <‘flex-basis’> ]`
+>
+> 默认值是： `0 1 auto`
+>
+> 生长以填充，收缩防溢出，如果flex-grow和flex-shrink值都为零，则flex项完全不灵活，否则就是灵活的。
+
+#### flex: [number]
+
+此语法指定了一个数字，表示此Flex项应采用的剩余（free）空间的比率
+
+> 代表了这个伸缩项目该占用的剩余空间比例
+
+在这个例子中，第一个伸缩项目占用了 2/4 的剩余空间，而另外两个各占用了 1/4 的剩余空间。
+
+<script async src="//jsfiddle.net/Ambler/9dtw5rb2/embed/html,css,result/"></script>
+
+为每个Flex项目设置数字为1会很有用，因为这可以使可用（剩余）空间均匀分布：
+
+> 如果把每个伸缩项目都设置为 1 的话，那么剩余空间就会被平均分配了
+
+<script async src="//jsfiddle.net/Ambler/4h70fqup/embed/html,css,result/"></script>
+
+> 这些flex item可没有设置宽高哦！
+
+#### flex: initial
+
+当有可用空间时，其flex值设置为initial的Flex Item将不灵活（inflexible ），但如果需要则可以缩小（shrink smaller）。
+
+> 一个 `flex` 属性值被设为 `initial` 的伸缩项目，在有剩余空间的情况下不会有任何变化，但是在必要的情况下会被收缩。
+
+#### flex: auto
+
+其flex值设置为auto的Flex Item将沿主轴完全灵活。
+
+ auto目前适用于Opera 12.11，但在Chrome 23.0.1271.95中不起作用。 你可以经常使用`flex:1`;来解决这个问题。
+
+> 一个 `flex` 属性值被设为 `auto` 的伸缩项目，会根据主轴自动伸缩以占用所有剩余空间。
+>
+> `auto` 目前仅在 Opera 12.11 尚有效，在 Chrome 23.0.1271.95 上无效。你可以通过使用 `flex: 1;` 来达到一样的效果。
+>
+> 即它的 `flex-grow` 属性为1哈！而`flex-grow`默认值为 0，即如果存在剩余空间，也不放大，既然为1，那么就会吃掉剩余空间！
+>
+> `flex:auto`这个值即 `1 1 auto`，而 `flex:none`的话则是 `0 0 auto`
+
+#### flex: none
+
+flex值设置为none的Flex Item在所有情况下都是完全不灵活的
+
+> 一个 `flex` 属性值被设为 `none` 的伸缩项目，在任何情况都不会发生伸缩。形象一点就是flex item此时可不是金箍棒了
+
+#### flex 缩写
+
+> advanced flex：高级姿势的flex
+
+`flex` 也可以把 `flex-grow`, `flex-shrink`, 和 `flex-basis` 这3个缩写（shorthand，简写）为1个声明：
+
+> flex: [flex-grow] [flex-shrink] [flex-basis]
+
+大多数用例不需要这种语法。 此外，它需要对flex算法有更专业的理解。 如果你有勇气，[到规范里看一下吧](http://www.w3.org/TR/css3-flexbox/#flex)。
+
+> 大多数情况下没必要使用这种语法。另外，它需要一个更容易理解的伸缩算法。如果你觉得自己挺厉害的，[到规范里看一下吧](http://www.w3.org/TR/css3-flexbox/#flex)。
+
+您还可以将flex-grow，flex-shrink和flex-basis中的每一个指定为单独的属性。不过， 我**强烈建议不要这样做**：因为当使用flex简写时，那些更明智的默认值将应用于未给出的值。
+
+> 当然你也可以将 `flex-grow`, `flex-shrink`, 和 `flex-basis` 作为单个属性分开来设置。但我强烈反对这种方式：当使用 `flex` 缩写时，即使没有某些值没有设置也能获得更合理的默认值。
+
+**➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#flex-property)
+
+### ◇visibility 叠加项目
+
+当该值生效时，应用 `visibility: collapse;` 和 `visibility: hidden;` 与 `display: none;` 的效果是不一样的。对于flex items来说，如果是 `collapse`，该元素会影响伸缩容器的侧轴宽高，但不会被显示，也不会占用（消耗）主轴上的任何空间。这对于你想动态添加（add）或移除（remove）伸缩项目而又不会影响伸缩容器的侧轴宽高来说，这将会非常有用。
+
+目前为止，`visibility: collapse;` 似乎还没有在让任何浏览器中正确实现。现在 `visibility: collapse;` 还和 `visibility: hidden;` 实现着一样的效果。我希望能尽快得到改观。
+
+在 [这里](http://www.w3.org/TR/css3-flexbox/#visibility-collapse) ，您可以看到一个很好的模拟示例，以此来说明 `collapse` 应该是如何工作的。
+
+![flex-visibility-collapse](img/03/flex-visibility-collapse.gif)
+
+> 将鼠标悬停在左侧的菜单上：每个部分都会展开以显示其子项。 为了保持侧边栏宽度（和主要区域宽度）稳定， 使用`visibility: collapse ` 而不是`display:none`。 这导致侧边栏对于“Architecture”这个词来说总是足够宽，即使它并不总是可见的。
+>
+> 在这里的Architecture难道是总体结构之意？
+>
+> **➹：**[架构、构架、结构、框架之间有什么区别？ - 知乎](https://www.zhihu.com/question/32105413)
+>
+> 讲真，这真得有点叼啊！
+
+## ★总结（Conclusion）
+
+正如您所看到的，Flexbox（伸缩布局盒）是一种强大的新型布局模式，它将彻底改变网站的布局。 正如您所看到的，它需要一种全新的思维方式。 希望本文为您准备开始使用Flexbox制作网站。 我不了解你，但在我看来，未来很棒。
+
+> 如你所见，伸缩布局盒(Flexbox) 是一个强大的新型布局模式，将会给网站带来革命性的布局方法，但它也需要一种全新的思考方式。希望这篇文章能为你使用伸缩布局盒构建网站带来帮助。我不知道你怎么想，但是在我看来未来是美好的。
 
 
 
@@ -401,6 +659,24 @@ Flex容器的每个子元素都是一个Flex Item，而且可以有任意数量�
 
 - 不知是不是看了上一篇布局教程的缘故，这次看flex布局轻松许多，还是说这篇有关flexbox的资料好呢？
 
+- 有些翻译很恶心呀，你要看w3c的术语表，你才知道这些单词具体表示什么意思：
+
+  **➹：**[CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#box-model)
+
+  有这么一句话：
+
+  > The [flex-flow](https://www.w3.org/TR/css-flexbox-1/#propdef-flex-flow) value and the [writing mode](https://www.w3.org/TR/css-writing-modes-4/#writing-mode) determine how these terms map to physical directions (top/right/bottom/left), axes (vertical/horizontal), and sizes (width/height).
+  >
+  > flex-flow和writing mode决定了这些术语如何映射到物理方向（顶部/右侧/底部/左侧），轴（垂直/水平）和尺寸或者说是大小（宽度/高度）。
+
+  以下是应用于 row flex容器的各种*directions* 和*sizing* 的术语的图示。
+
+  ![img](img/03/flex-direction-terms.svg)
+
+- 你唯有对这个知识点（如flex布局）不断地提出疑问，才能不断地深入了解它！
+
+- 感觉看英文的解释比中文好多了，因为看中文总会有歧义，而且有些翻译的不是很好，而英文则少有，比较原汁原味！
+
 ## ★Q&A
 
 ### ①下图中NOTE、REC、CR等表示什么？
@@ -459,7 +735,63 @@ Concepts and Terminology：
 
 **➹：**[计算机辅助翻译 - 知乎](https://www.zhihu.com/topic/19667925/hot)
 
+### ⑤flex布局到底是一维的还是二维的？
 
+mdn上说：
 
+> Flexible Box 模型，通常被称为 flexbox，是一种一维的布局模型。它给 flexbox 的子元素之间提供了强大的空间分布和对齐能力。本文给出了 flexbox 的主要特性，更多的细节将在别的文档中探索。
+>
+> 我们说 flexbox 是一种一维的布局，是因为一个 flexbox 一次只能处理一个维度上的元素布局，一行或者一列。作为对比的是另外一个二维布局 [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)，可以同时处理行和列上的布局。
 
+我们通常会把它的主轴和侧轴看作是平面直角坐标系的x轴和y轴，即二维的！
+
+所以这TM到底是一维的还是二维的？——我想这TM需要根据上下文来判断啊！这TM还需要判断吗？是就是，不是就不是，搞那么多花肠子出来真TM操蛋！
+
+**➹：**[【前端工程师手册】关于flexbox的why、what和how - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000014078511)
+
+**➹：**[flex 布局的基本概念 - CSS：层叠样式表 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+
+**➹：**[flex布局踩过的那些坑 - 前端CSS - SegmentFault 思否](https://segmentfault.com/a/1190000006559564)
+
+### ⑥假设是默认的flex容器，那么main size到底是单个子元素占主轴的空间还是所有item占主轴的空间？
+
+如果是W3C是定义了规范文档，那么MDN就定义了火狐浏览器对其实现的解释了呀！
+
+你要知道实现一个规范并不代表会100%实现的呀！
+
+而这张图是mdn上的：
+
+![img](img/03/v2-54a0fc96ef4f455aefb8ee4bc133291b_hd.jpg)
+
+所以说mian size即是单个元素占主轴的空间咯！
+
+那么W3C上的这张图：
+
+![img](img/03/flex-direction-terms.svg)
+
+显然，它这里描述的是main size是多个元素占主轴的空间啊！
+
+所以听谁的？
+
+### ⑦关于圣杯布局？
+
+**➹：**[关于「圣杯布局」 - 天道酬勤 - SegmentFault 思否](https://segmentfault.com/a/1190000004524159)
+
+### ⑧其它关于flex布局的文章？
+
+**➹：**[深入理解 flex 布局以及计算_Flexbox, Layout 教程_w3cplus](https://www.w3cplus.com/css3/flexbox-layout-and-calculation.html)
+
+**➹：**[一起从头学习Flex - 掘金](https://juejin.im/post/59b226edf265da24754db7fb)
+
+**➹：**[css – 可见性之间有什么区别：隐藏和可见性：在flexbox中崩溃？ - 程序园](http://www.voidcn.com/article/p-kcthtvly-bud.html)
+
+**➹：**[【前端工程师手册】关于flexbox的why、what和how - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000014078511)
+
+### ⑨隐喻是什么鬼？
+
+**➹：**[隐喻（软件工程术语）_百度百科](https://baike.baidu.com/item/%E9%9A%90%E5%96%BB/3953646)
+
+**➹：**[语用学是如何理解和研究隐喻的？与认知语言学有何不同？ - 知乎](https://www.zhihu.com/question/26440580)
+
+**➹：**[软件架构入门 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2016/09/software-architecture.html)
 
