@@ -10,6 +10,8 @@ typora-copy-images-to: img\03
 
 **➹：**[[译]深入了解 Flexbox 伸缩盒模型 - 小影志](https://c7sky.com/dive-into-flexbox.html)
 
+**➹：**[Css3-flexbox/zh-hans - HTML5 Chinese Interest Group Wiki](https://www.w3.org/html/ig/zh/wiki/Css3-flexbox/zh-hans)
+
 ## ★引子
 
 之前对flexbox了解得还是很不够，而且对一些属性的理解甚是表面！而这次打算用flex布局来写个在线简历！所以就再次回顾Flexbox了。
