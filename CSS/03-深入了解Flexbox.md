@@ -779,6 +779,8 @@ mdn上说：
 
 ### ⑧其它关于flex布局的文章？
 
+**➹：**[Css3-flexbox/zh-hans - HTML5 Chinese Interest Group Wiki](https://www.w3.org/html/ig/zh/wiki/Css3-flexbox/zh-hans)
+
 **➹：**[深入理解 flex 布局以及计算_Flexbox, Layout 教程_w3cplus](https://www.w3cplus.com/css3/flexbox-layout-and-calculation.html)
 
 **➹：**[一起从头学习Flex - 掘金](https://juejin.im/post/59b226edf265da24754db7fb)
