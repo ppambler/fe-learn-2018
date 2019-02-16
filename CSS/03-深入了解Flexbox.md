@@ -596,6 +596,8 @@ flex值设置为none的Flex Item在所有情况下都是完全不灵活的
 >
 > 讲真，这真得有点叼啊！
 
+<script async src="//jsfiddle.net/Ambler/L12gsqa5/3/embed/html,css,result/"></script>
+
 ## ★总结（Conclusion）
 
 正如您所看到的，Flexbox（伸缩布局盒）是一种强大的新型布局模式，它将彻底改变网站的布局。 正如您所看到的，它需要一种全新的思维方式。 希望本文为您准备开始使用Flexbox制作网站。 我不了解你，但在我看来，未来很棒。
