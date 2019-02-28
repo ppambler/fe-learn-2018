@@ -617,7 +617,7 @@ section {
 >
 > 当你调整浏览器窗口大小时，布局比以前更酷了！
 
-田田（Tada）！ 现在我们的布局在移动浏览器上看起来也很棒。 这里有[一些同样使用媒体查询的热门网站](https://mediaqueri.es/mse/)。 除了`min-width` 和 `max-width`之外，在[MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)中你还可以学到更多有关媒体查询的知识。
+田田（Tada :tada:）！ 现在我们的布局在移动浏览器上看起来也很棒。 这里有[一些同样使用媒体查询的热门网站](https://mediaqueri.es/mse/)。 除了`min-width` 和 `max-width`之外，在[MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)中你还可以学到更多有关媒体查询的知识。
 
 ### ◇友情提示
 

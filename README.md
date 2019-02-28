@@ -25,6 +25,8 @@
 
 ## ★目录
 
+> 关于文章目录查看，可以安装个[Table of contents sidebar - Chrome 网上应用店](https://chrome.google.com/webstore/detail/table-of-contents-sidebar/ohohkfheangmbedkgechjkmbepeikkej)插件
+
 - [HTML](./HTML/README.md)
 - [CSS](./CSS/README.md)
   - [01-Flex布局](./CSS/01-Flex布局.md)
@@ -32,6 +34,7 @@
   - [03-深入了解Flexbox](./CSS/03-深入了解Flexbox.md)
 - [JavaScript](./JavaScript/README.md)
   - [01-作用域](./JavaScript/01-作用域.md)
+  - [02-到底什么是Event Loop？](./JavaScript/02-到底什么是Event-Loop.md)
 - [Browser](./Browser/README.md)
   - [01-introduction](./Browser/01-introduction.md)
   - [02-rendering-engine](./Browser/02-rendering-engine.md)
@@ -43,6 +46,8 @@
   - [02-regex入门](./Regex/02-regex入门.md)
 - [Soft-Skills](./Soft-Skills/README.md)
   - [01-如何成为一名很skr的程序猿](./Soft-Skills/01-如何成为一名很skr的程序猿.md)
+- [Hard-Skills](./Hard-Skills/README.md)
+  - [01-编码规范](./Hard-Skills/01-编码规范.md)
 - [Online-Course](./Online-Course/README.md)
   - [imooc](./Online-Course/imooc/README.md)
   - [xiedaimala](./Online-Course/xiedaimala/README.md)
