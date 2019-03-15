@@ -26,6 +26,8 @@
 ## ★目录
 
 > 关于文章目录查看，可以安装个[Table of contents sidebar - Chrome 网上应用店](https://chrome.google.com/webstore/detail/table-of-contents-sidebar/ohohkfheangmbedkgechjkmbepeikkej)插件
+>
+> 关于目录的划分很操蛋啊！为了找到适合自己的姿势，划分的太细不好，划分的太大也不好，只能不停地修修改改了
 
 - [HTML](./HTML/README.md)
 - [CSS](./CSS/README.md)
@@ -54,6 +56,7 @@
   - [xiedaimala](./Online-Course/xiedaimala/README.md)
   - [time.geekbang](./Online-Course/time-geekbang/README.md)
   - [zhihu](./Online-Course/zhihu/README.md)
+- [Books](./Books/README.md)
 - [Tool](./Tool/README.md)
 - [Todo](./Todo/README.md)
 
