@@ -37,6 +37,7 @@
 - [JavaScript](./JavaScript/README.md)
   - [01-作用域](./JavaScript/01-作用域.md)
   - [02-到底什么是Event Loop？](./JavaScript/02-到底什么是Event-Loop.md)
+  - [04-JavaScript里的执行上下文和调用栈到底是什么鬼东西](./JavaScript/04-JavaScript里的执行上下文和调用栈到底是什么鬼东西.md)
 - [Browser](./Browser/README.md)
   - [01-introduction](./Browser/01-introduction.md)
   - [02-rendering-engine](./Browser/02-rendering-engine.md)
