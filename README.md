@@ -39,6 +39,7 @@
   - [02-到底什么是Event Loop？](./JavaScript/02-到底什么是Event-Loop.md)
   - [03-我就从来没有真正理解过JavaScript闭包](./JavaScript/03-我就从来没有真正理解过JavaScript闭包.md)
   - [04-JavaScript里的执行上下文和调用栈到底是什么鬼东西](./JavaScript/04-JavaScript里的执行上下文和调用栈到底是什么鬼东西.md)
+  - [05-只有20行的JS模板引擎](./JavaScript/05-只有20行的JS模板引擎.md)
 - [Browser](./Browser/README.md)
   - [01-introduction](./Browser/01-introduction.md)
   - [02-rendering-engine](./Browser/02-rendering-engine.md)
