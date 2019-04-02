@@ -12,6 +12,11 @@ typora-copy-images-to: img\00
 
 **➹：**[linux - 随笔分类 - peida - 博客园](https://www.cnblogs.com/peida/category/309012.html)
 
+## ★目录
+
+- [01-部署nodejs项目](./01-部署nodejs项目.md)
+- [02-如何让cat命令的输出是有颜色的？](./02-如何让cat命令的输出是有颜色的.md)
+
 ## ★常用命令行
 
 ### ◇Unix/Linux命令
