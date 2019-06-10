@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- 这个不加会看到dpr影响， 如果加上则不会。-->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0; 
+    }
+    #box1 {
+      border: 30px solid red;
+      width: 90px;
+      height: 90px;
+    }
+    #box2 {
+      box-sizing: border-box;
+      border: 20px solid salmon;
+      width: 1080px;
+      height: 1080px;
+    }
+    #box3 {
+      box-sizing: border-box;
+      border: 20px solid aqua;
+      width: 300px;
+      height: 300px;
+    }
+    @media screen and (max-width: 360px) {
+      #box3 {
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="box1">PC上看：120px</div>
+  <div id="box2">PC上看：1080px</div>
+  <div id="box3">PC上看：300px</div>
+  <script>
+    var dpr = window.devicePixelRatio
+    if(dpr != 1) {
+      box1.innerText = `视觉呈现缩小了1/${dpr}，即原来为120px，如今是${120/dpr}px`
+      box2.innerText = `在dpr为${dpr}且dip为360px的设备上看：刚好充满屏幕。`
+      box3.innerText = `本来是300px，如今是150px`
+    }
+
+  </script>
+</body>
+</html>
